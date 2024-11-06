@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 public class FileLoader {
 
 
-    public String loadFile(String productsFilePath) {
+    private String loadFile(String productsFilePath) {
         Path path = Paths.get(productsFilePath);
 
         try {
