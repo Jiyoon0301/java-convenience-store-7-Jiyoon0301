@@ -22,4 +22,8 @@ public class FileLoader {
     public String loadProducts() {
         return loadFile("src/main/resources/products.md");
     }
+
+    public String loadPromotions() {
+        return loadFile("src/main/resources/promotions.md");
+    }
 }
