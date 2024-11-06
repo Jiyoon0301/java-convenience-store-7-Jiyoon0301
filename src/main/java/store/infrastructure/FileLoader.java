@@ -18,4 +18,8 @@ public class FileLoader {
             return "";
         }
     }
+
+    public String loadProducts() {
+        return loadFile("src/main/resources/products.md");
+    }
 }
