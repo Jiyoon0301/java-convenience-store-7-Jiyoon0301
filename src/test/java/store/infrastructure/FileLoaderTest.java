@@ -28,4 +28,17 @@ public class FileLoaderTest {
         // then
         assertThat(result.replaceAll("\\s+", " ").trim()).isEqualTo(expected);
     }
+
+    @Test
+    void 프로모션_파일_불러오기() throws IOException {
+        // given
+        String productsFilePath = "src/main/resources/promotions.md";
+        String expected = Files.readString(Paths.get(productsFilePath)).replaceAll("\\s+", " ").trim();
+
+        // when
+        String result = fileLoader.loadPromotions();
+
+        // then
+        assertThat(result.replaceAll("\\s+", " ").trim()).isEqualTo(expected);
+    }
 }
