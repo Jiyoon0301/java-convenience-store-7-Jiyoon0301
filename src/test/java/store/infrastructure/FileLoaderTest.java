@@ -23,9 +23,9 @@ public class FileLoaderTest {
         String expected = Files.readString(Paths.get(productsFilePath)).replaceAll("\\s+", " ").trim();
 
         // when
-        String result = fileLoader.loadProducts();
+        String result = fileLoader.loadFile(productsFilePath);
 
         // then
-        assertThat(result.replaceAll("\\s+", " ")).isEqualTo(expected);
+        assertThat(result.replaceAll("\\s+", " ").trim()).isEqualTo(expected);
     }
 }
