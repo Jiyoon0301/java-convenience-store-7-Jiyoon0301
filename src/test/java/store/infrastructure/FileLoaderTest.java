@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,17 +24,23 @@ public class FileLoaderTest {
         // given
         String name = "콜라";
         int price = 1000;
-        int quantity = 10;
-        String promotion = "탄산2+1";
+        int regularStock = 10;
+        int promoStock = 10;
+        Promotion promotion = new Promotion("탄산2+1", 2, 1,
+                LocalDate.of(2024, 01, 01),
+                LocalDate.of(2024, 12, 31));
+        List<Promotion> promotions = new ArrayList<>();
+        promotions.add(promotion);
 
         // when
-        List<Product> products = fileLoader.loadProducts();
+        List<Product> products = fileLoader.loadProducts(promotions);
         Product result = products.get(0);
 
         // then
         assertThat(result.getName()).isEqualTo(name);
         assertThat(result.getPrice()).isEqualTo(price);
-        assertThat(result.getQuantity()).isEqualTo(quantity);
+        assertThat(result.getRegularQuantity()).isEqualTo(regularStock);
+        assertThat(result.getPromoQuantity()).isEqualTo(promoStock);
         assertThat(result.getPromotion()).isEqualTo(promotion);
     }
 
