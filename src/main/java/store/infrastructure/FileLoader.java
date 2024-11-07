@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 
 public class FileLoader {
 
-
     private String loadFile(String productsFilePath) {
         Path path = Paths.get(productsFilePath);
 
