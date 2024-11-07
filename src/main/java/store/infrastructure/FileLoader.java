@@ -1,11 +1,13 @@
 package store.infrastructure;
 
 import store.domain.Product;
+import store.domain.Promotion;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class FileLoader {
 
         String[] lines = data.split("\n");
 
-        for (int i = 1; i < lines.length; i++){
+        for (int i = 1; i < lines.length; i++) {
             String[] fields = lines[i].split(",");
 
             String name = fields[0].trim();
@@ -42,7 +44,24 @@ public class FileLoader {
         return products;
     }
 
-    public String loadPromotions() {
-        return loadFile("src/main/resources/promotions.md");
+    public List<Promotion> loadPromotions() {
+        String data = loadFile("src/main/resources/promotions.md");
+        List<Promotion> promotions = new ArrayList<>();
+
+        String[] lines = data.split("\n");
+
+        for (int i = 1; i < lines.length; i++) {
+            String[] fields = lines[i].split(",");
+
+            String name = fields[0].trim();
+            int buy = Integer.parseInt(fields[1].trim());
+            int get = Integer.parseInt(fields[2].trim());
+            LocalDate startDate = LocalDate.parse(fields[3].trim());
+            LocalDate endDate = LocalDate.parse(fields[4].trim());
+
+            Promotion promotion = new Promotion(name, buy, get, startDate, endDate);
+            promotions.add(promotion);
+        }
+        return promotions;
     }
 }

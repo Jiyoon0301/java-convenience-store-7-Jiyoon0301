@@ -3,6 +3,7 @@ package store.infrastructure;
 import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.Test;
 import store.domain.Product;
+import store.domain.Promotion;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,7 +44,7 @@ public class FileLoaderTest {
         int buy = 2;
         int get = 1;
         LocalDate startDate = LocalDate.of(2024,01,01);
-        LocalDate endDate = LocalDate.of(2024,12,30);
+        LocalDate endDate = LocalDate.of(2024,12,31);
 
         // when
         List<Promotion> promotions = fileLoader.loadPromotions();
