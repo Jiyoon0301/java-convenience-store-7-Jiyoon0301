@@ -1,11 +1,14 @@
 package store.infrastructure;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.Test;
 import store.domain.Product;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,16 +36,25 @@ public class FileLoaderTest {
         assertThat(result.getPromotion()).isEqualTo(promotion);
     }
 
-//    @Test
-//    void 프로모션_파일_불러오기() throws IOException {
-//        // given
-//        String productsFilePath = "src/main/resources/promotions.md";
-//        String expected = Files.readString(Paths.get(productsFilePath)).replaceAll("\\s+", " ").trim();
-//
-//        // when
-//        String result = fileLoader.loadPromotions();
-//
-//        // then
-//        assertThat(result.replaceAll("\\s+", " ").trim()).isEqualTo(expected);
-//    }
+    @Test
+    void 프로모션_파일_불러오기() throws IOException {
+        // given
+        String name = "탄산2+1";
+        int buy = 2;
+        int get = 1;
+        LocalDate startDate = LocalDate.of(2024,01,01);
+        LocalDate endDate = LocalDate.of(2024,12,30);
+
+        // when
+        List<Promotion> promotions = fileLoader.loadPromotions();
+        Promotion result = promotions.get(0);
+        DateTimes.now();
+
+        // then
+        assertThat(result.getName()).isEqualTo(name);
+        assertThat(result.getBuy()).isEqualTo(buy);
+        assertThat(result.getGet()).isEqualTo(get);
+        assertThat(result.getStartDate()).isEqualTo(startDate);
+        assertThat(result.getEndDate()).isEqualTo(endDate);
+    }
 }
