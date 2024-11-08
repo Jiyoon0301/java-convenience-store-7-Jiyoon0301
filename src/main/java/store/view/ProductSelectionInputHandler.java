@@ -7,22 +7,22 @@ import java.util.*;
 
 public class ProductSelectionInputHandler {
 
-    public static String promptProductSelection(List<Product> products) {
+    public static Map<Product, Integer> promptProductSelection(List<Product> products) {
 
         System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]");
 
         String input = Console.readLine();
-        validateProductSelection(input, products);
-        return input;
+        Map<Product, Integer> productAndQuantityParis = validateProductSelection(input, products);
+        return productAndQuantityParis;
     }
 
-    public static Map<String, Integer> validateProductSelection(String input, List<Product> products) {
+    public static Map<Product, Integer> validateProductSelection(String input, List<Product> products) {
         List<String> noBrackets = validateEnclosedInBrackets(input);
         Map<String, String> noHyphen = canSplitByHyphen(noBrackets);
         Map<Product, String> productAndQuantityPaires = validateProductExists(noHyphen, products);
-        Map<Product, Integer> nameAndQuantityPairs = validateQuantity(productAndQuantityPaires);
-        checkStock(nameAndQuantityPairs);
-        return null;
+        Map<Product, Integer> productAndQuantityParis = validateQuantity(productAndQuantityPaires);
+        checkStock(productAndQuantityParis);
+        return productAndQuantityParis;
     }
 
     private static List<String> validateEnclosedInBrackets(String input) {
