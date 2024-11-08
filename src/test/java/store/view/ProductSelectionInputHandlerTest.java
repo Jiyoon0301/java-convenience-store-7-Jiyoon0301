@@ -28,4 +28,15 @@ public class ProductSelectionInputHandlerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
     }
+
+    @Test
+    void 존재하지_않는_상품이_포함되어_있으면_예외_발생() {
+        // given
+        String input = "[콜라-10],[포카칩-3]";
+
+        // when & then
+        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
+    }
 }
