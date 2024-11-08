@@ -3,10 +3,7 @@ package store.view;
 import camp.nextstep.edu.missionutils.Console;
 import store.domain.Product;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProductSelectionInputHandler {
 
@@ -22,8 +19,9 @@ public class ProductSelectionInputHandler {
     public static Map<String, Integer> validateProductSelection(String input, List<Product> products) {
         List<String> noBrackets = validateEnclosedInBrackets(input);
         Map<String, String> noHyphen = canSplitByHyphen(noBrackets);
-        validateProductExists(noHyphen, products);
-        Map<String,Integer> nameAndQuantityPairs = validateQuantity(noHyphen);
+        Map<Product, String> productAndQuantityPaires = validateProductExists(noHyphen, products);
+        Map<Product, Integer> nameAndQuantityPairs = validateQuantity(productAndQuantityPaires);
+        checkStock(nameAndQuantityPairs);
         return null;
     }
 
@@ -42,7 +40,7 @@ public class ProductSelectionInputHandler {
     private static Map<String, String> canSplitByHyphen(List<String> input) {
         Map<String, String> noHyphen = new HashMap<>();
         for (String el : input) {
-            if (! el.contains("-")) {
+            if (!el.contains("-")) {
                 throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
             }
             String[] pair = el.split("-");
@@ -50,25 +48,27 @@ public class ProductSelectionInputHandler {
         }
         return noHyphen;
     }
-    private static void validateProductExists(Map<String, String> noHyphen, List<Product> products) {
+
+    private static Map<Product, String> validateProductExists(Map<String, String> noHyphen, List<Product> products) {
+        Map<Product, String> productAndQuantity = new HashMap<>();
         for (String name : noHyphen.keySet()) {
-            if (! doseExist(name, products)) {
-                throw new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
-            }
+            productAndQuantity.put(doseExist(name, products), noHyphen.get(name));
         }
-    }
-    private static Boolean doseExist(String name, List<Product> products) {
-        for (Product product : products) {
-            if (product.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
+        return productAndQuantity;
     }
 
-    private static Map<String, Integer> validateQuantity(Map<String, String> noHyphen) {
-        Map<String, Integer> nameAndQuantityPairs = new HashMap<>();
-        for (Map.Entry<String, String> entry : noHyphen.entrySet()) {
+    private static Product doseExist(String name, List<Product> products) {
+        for (Product product : products) {
+            if (product.getName().equals(name)) {
+                return product;
+            }
+        }
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
+    }
+
+    private static Map<Product, Integer> validateQuantity(Map<Product, String> noHyphen) {
+        Map<Product, Integer> nameAndQuantityPairs = new HashMap<>();
+        for (Map.Entry<Product, String> entry : noHyphen.entrySet()) {
             try {
                 Integer.parseInt(entry.getValue());
             } catch (Exception e) {
@@ -79,4 +79,11 @@ public class ProductSelectionInputHandler {
         return nameAndQuantityPairs;
     }
 
+    private static void checkStock(Map<Product, Integer> input) {
+        for (Map.Entry<Product, Integer> entry : input.entrySet()) {
+            if (entry.getKey().getRegularQuantity() + entry.getKey().getPromoQuantity() < entry.getValue()) {
+                throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+            }
+        }
+    }
 }
