@@ -15,7 +15,7 @@ public class PurchaseItemTest {
         LocalDate end = LocalDate.of(2024, 12, 31);
         Promotion promotion = new Promotion("탄산2+1", 2, 1, start, end);
         Product product = new Product("콜라", 1000, 10, 10, promotion);
-        int quantity = 10;
+        int quantity = 5;
         PurchaseItem purchaseItem = new PurchaseItem(product, quantity);
 
         // when
