@@ -49,4 +49,17 @@ public class ProductSelectionInputHandlerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
     }
+
+    @Test
+    void 수량이_숫자만_있는_게_아니라면_예외_발생() {
+        // given
+        String input = "[콜라-a]";
+        Promotion promotion = new Promotion("탄산2+1", 2, 1, LocalDate.of(2024, 01, 01), LocalDate.of(2024, 12, 31));
+        List<Product> products = new ArrayList<>(List.of(new Product("콜라", 1000, 10, 10, promotion)));
+
+        // when & then
+        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+    }
 }

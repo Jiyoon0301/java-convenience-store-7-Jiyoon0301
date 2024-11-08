@@ -23,6 +23,7 @@ public class ProductSelectionInputHandler {
         List<String> noBrackets = validateEnclosedInBrackets(input);
         Map<String, String> noHyphen = canSplitByHyphen(noBrackets);
         validateProductExists(noHyphen, products);
+        Map<String,Integer> nameAndQuantityPairs = validateQuantity(noHyphen);
         return null;
     }
 
@@ -63,6 +64,19 @@ public class ProductSelectionInputHandler {
             }
         }
         return false;
+    }
+
+    private static Map<String, Integer> validateQuantity(Map<String, String> noHyphen) {
+        Map<String, Integer> nameAndQuantityPairs = new HashMap<>();
+        for (Map.Entry<String, String> entry : noHyphen.entrySet()) {
+            try {
+                Integer.parseInt(entry.getValue());
+            } catch (Exception e) {
+                throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+            }
+            nameAndQuantityPairs.put(entry.getKey(), Integer.parseInt(entry.getValue()));
+        }
+        return nameAndQuantityPairs;
     }
 
 }
