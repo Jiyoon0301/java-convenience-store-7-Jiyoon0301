@@ -21,10 +21,10 @@ public class ProductSelectionInputHandlerTest {
     @Test
     void 구매할_상품명과_수량이_하이픈으로_구별되어있지_않으면_예외_발생() {
         // given
-        List<String> input = new ArrayList<>(List.of("콜라-10", "사이다3"));
+        String input = "[콜라-10],[사이다3]";
 
         // when & then
-        assertThatThrownBy(() -> ProductSelectionInputHandler.canSplitByHyphen(input))
+        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
     }
