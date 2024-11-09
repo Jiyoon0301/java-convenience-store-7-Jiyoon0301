@@ -39,21 +39,4 @@ public class PurchaseItemTest {
         // then
         assertThat(result).isTrue();
     }
-
-//    @Test
-//    void 프로모션_재고가_입력_수량보다_적은지_반환한다() {
-//        // given
-//        LocalDate start = LocalDate.of(2024, 01, 01);
-//        LocalDate end = LocalDate.of(2024, 12, 31);
-//        Promotion promotion = new Promotion("탄산2+1", 2, 1, start, end);
-//        Product product = new Product("콜라", 1000, 10, 5, promotion);
-//        int quantity = 10;
-//        PurchaseItem purchaseItem = new PurchaseItem(product, quantity);
-//
-//        // when
-//        Boolean result = purchaseItem.isPromotionStockInsufficient();
-//
-//        // then
-//        assertThat(result).isTrue();
-//    }
 }
