@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PurchaseItemTest {
 
     @Test
-    void 추가_가능한_프로모션_수량을_반환한다() {
+    void 추가_가능한_프로모션_수량이_있는지_반환한다() {
         // given
         LocalDate start = LocalDate.of(2024, 01, 01);
         LocalDate end = LocalDate.of(2024, 12, 31);
