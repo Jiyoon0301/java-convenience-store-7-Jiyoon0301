@@ -38,7 +38,7 @@ public class ProductSelectionInputHandler {
     }
 
     private static Map<String, String> canSplitByHyphen(List<String> input) {
-        Map<String, String> noHyphen = new HashMap<>();
+        Map<String, String> noHyphen = new LinkedHashMap<>();
         for (String el : input) {
             if (!el.contains("-")) {
                 throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
@@ -50,7 +50,7 @@ public class ProductSelectionInputHandler {
     }
 
     private static Map<Product, String> validateProductExists(Map<String, String> noHyphen, List<Product> products) {
-        Map<Product, String> productAndQuantity = new HashMap<>();
+        Map<Product, String> productAndQuantity = new LinkedHashMap<>();
         for (String name : noHyphen.keySet()) {
             productAndQuantity.put(doseExist(name, products), noHyphen.get(name));
         }
@@ -67,7 +67,7 @@ public class ProductSelectionInputHandler {
     }
 
     private static Map<Product, Integer> validateQuantity(Map<Product, String> noHyphen) {
-        Map<Product, Integer> nameAndQuantityPairs = new HashMap<>();
+        Map<Product, Integer> nameAndQuantityPairs = new LinkedHashMap<>();
         for (Map.Entry<Product, String> entry : noHyphen.entrySet()) {
             try {
                 Integer.parseInt(entry.getValue());
