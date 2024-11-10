@@ -2,6 +2,7 @@ package store.service;
 
 import store.domain.Product;
 import store.domain.PurchaseItem;
+import store.domain.Receipt;
 
 import java.util.List;
 import java.util.Map;
@@ -13,5 +14,9 @@ public class PurchaseService {
                 .map(entry -> new PurchaseItem(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
         return purchaseItems;
+    }
+
+    public Receipt createReceipt(List<PurchaseItem> purchaseItems) {
+        return new Receipt(purchaseItems);
     }
 }
