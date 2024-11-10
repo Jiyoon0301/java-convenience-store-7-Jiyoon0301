@@ -1,19 +1,26 @@
 package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import store.domain.ErrorMessage;
 import store.domain.Product;
 
 import java.util.*;
+import java.util.logging.ErrorManager;
 
 public class ProductSelectionInputHandler {
 
     public static Map<Product, Integer> promptProductSelection(List<Product> products) {
+        while (true) {
+            System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]");
+            String input = Console.readLine();
+            try {
+                Map<Product, Integer> productAndQuantityParis = validateProductSelection(input, products);
+                return productAndQuantityParis;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
 
-        System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]");
-
-        String input = Console.readLine();
-        Map<Product, Integer> productAndQuantityParis = validateProductSelection(input, products);
-        return productAndQuantityParis;
+        }
     }
 
     public static Map<Product, Integer> validateProductSelection(String input, List<Product> products) {
@@ -30,7 +37,7 @@ public class ProductSelectionInputHandler {
         List<String> result = new ArrayList<>();
         for (String nameAndQuantity : nameAndQuantityPair) {
             if (!nameAndQuantity.startsWith("[") || !nameAndQuantity.endsWith("]")) {
-                throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
             }
             result.add(nameAndQuantity.substring(1, nameAndQuantity.length() - 1));
         }
@@ -41,7 +48,7 @@ public class ProductSelectionInputHandler {
         Map<String, String> noHyphen = new LinkedHashMap<>();
         for (String el : input) {
             if (!el.contains("-")) {
-                throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
             }
             String[] pair = el.split("-");
             noHyphen.put(pair[0], pair[1]);
@@ -63,7 +70,7 @@ public class ProductSelectionInputHandler {
                 return product;
             }
         }
-        throw new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
+        throw new IllegalArgumentException(ErrorMessage.NOT_EXIST.getMessage());
     }
 
     private static Map<Product, Integer> validateQuantity(Map<Product, String> noHyphen) {
@@ -72,7 +79,7 @@ public class ProductSelectionInputHandler {
             try {
                 Integer.parseInt(entry.getValue());
             } catch (Exception e) {
-                throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
             }
             nameAndQuantityPairs.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
@@ -84,7 +91,7 @@ public class ProductSelectionInputHandler {
             int promoStock = Math.max(entry.getKey().getPromoStock(), 0);
             int regularStock = Math.max(entry.getKey().getRegularStock(), 0);
             if (promoStock + regularStock < entry.getValue()) {
-                throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK.getMessage());
             }
         }
     }

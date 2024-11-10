@@ -3,6 +3,7 @@ package store.view;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import store.domain.ErrorMessage;
 import store.domain.Product;
 import store.domain.Promotion;
 
@@ -22,7 +23,7 @@ public class ProductSelectionInputHandlerTest {
         // when & then
         assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
+                .hasMessage(ErrorMessage.INVALID_FORMAT.getMessage());
     }
 
     @Test
@@ -34,7 +35,7 @@ public class ProductSelectionInputHandlerTest {
         // when & then
         assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
+                .hasMessage(ErrorMessage.INVALID_FORMAT.getMessage());
     }
 
     @Test
@@ -47,7 +48,7 @@ public class ProductSelectionInputHandlerTest {
         // when & then
         assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
+                .hasMessage(ErrorMessage.NOT_EXIST.getMessage());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class ProductSelectionInputHandlerTest {
         // when & then
         assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+                .hasMessage(ErrorMessage.INVALID_INPUT.getMessage());
     }
 
     @Test
@@ -73,6 +74,6 @@ public class ProductSelectionInputHandlerTest {
         // when & then
         assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+                .hasMessage(ErrorMessage.OUT_OF_STOCK.getMessage());
     }
 }

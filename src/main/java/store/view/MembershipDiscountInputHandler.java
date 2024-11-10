@@ -1,19 +1,26 @@
 package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import store.domain.ErrorMessage;
 
 public class MembershipDiscountInputHandler {
 
 
     public static Boolean promptAskingMembershipDiscount() {
-        System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
-        String input = Console.readLine();
-        return validateInput(input);
+        while (true) {
+            System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
+            String input = Console.readLine();
+            try {
+                return validateInput(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public static Boolean validateInput(String input) {
         if (!(input.equals("Y") || input.equals("N"))) {
-            throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
         }
         if (input == "Y") {
             return true;

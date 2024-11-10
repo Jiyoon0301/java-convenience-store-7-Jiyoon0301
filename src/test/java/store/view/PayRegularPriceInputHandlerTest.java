@@ -2,6 +2,7 @@ package store.view;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import store.domain.ErrorMessage;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -13,7 +14,7 @@ public class PayRegularPriceInputHandlerTest {
         // when & then
         assertThatThrownBy(() -> PayRegularPriceInputHandler.validateInput(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+                .hasMessage(ErrorMessage.INVALID_INPUT.getMessage());
     }
 
     @ParameterizedTest

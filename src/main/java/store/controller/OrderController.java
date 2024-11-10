@@ -22,39 +22,75 @@ public class OrderController {
 
     public void run() {
         while (true) {
-            List<Promotion> promotions = fileLoader.loadPromotions();
-            List<Product> products = fileLoader.loadProducts(promotions);
-
-            ProductOutputHandler.printProductList(products);
-            Map<Product, Integer> productAndQuantityPairs = ProductSelectionInputHandler.promptProductSelection(products);
-            List<PurchaseItem> purchaseItems = purchaseService.createPurchaseItems(productAndQuantityPairs);
-
-            for (PurchaseItem item : purchaseItems) {
-                if (item.getProduct().getPromotion() != null && item.getProduct().getPromotion().canBeApplied()) {
-                    if (item.canBeAddFreeMore()) {
-                        Boolean answerAboutAddFree = AddFreeInputHandler.promptAskingAddFree(item.getProduct().getName());
-                        if (answerAboutAddFree) {
-                            item.addQuantity();
-                        }
-
-                        if (item.getProduct().maxPromotionQuantity() < item.getQuantity()) {
-                            if (!PayRegularPriceInputHandler.promptAskingPayRegularPrice(item.getProduct().getName(), item.getQuantity() - item.getProduct().maxPromotionQuantity())) {
-                                item.decreaseQuantity(item.getQuantity() - item.getProduct().maxPromotionQuantity());
-                            }
-                        }
-                    }
-                }
-            }
-
-            Boolean membershipDiscountChoice = MembershipDiscountInputHandler.promptAskingMembershipDiscount();
-
-            Receipt receipt = purchaseService.createReceipt(purchaseItems);
-            ReceiptOutputHandler.printReceipt(receipt, membershipDiscountChoice);
-
-            Boolean answerAbountAdditionalPurchase = AdditionalPurchaseInputHandler.promptAdditionalPurchase();
-            if (!answerAbountAdditionalPurchase) {
+            Boolean again = process();
+            if (!again) {
                 break;
             }
         }
     }
+
+    private Boolean process() {
+        List<Product> products = createProduct();
+
+        List<PurchaseItem> purchaseItems = selectProduct(products);
+
+        adjustQuantity(purchaseItems);
+
+        Receipt receipt = issueReceipt(purchaseItems);
+
+        removeStock(receipt);
+
+        return AdditionalPurchaseInputHandler.promptAdditionalPurchase();
+    }
+
+    private List<Product> createProduct() {
+        List<Promotion> promotions = fileLoader.loadPromotions();
+        return fileLoader.loadProducts(promotions);
+    }
+
+    private List<PurchaseItem> selectProduct(List<Product> products) {
+        ProductOutputHandler.printProductList(products);
+        Map<Product, Integer> productAndQuantityPairs = ProductSelectionInputHandler.promptProductSelection(products);
+        return purchaseService.createPurchaseItems(productAndQuantityPairs);
+    }
+
+    private void adjustQuantity(List<PurchaseItem> purchaseItems) {
+        for (PurchaseItem item : purchaseItems) {
+            if (item.getProduct().getPromotion() != null && item.getProduct().getPromotion().canBeApplied()) {
+                addQuantityIfPossible(item);
+                decreaseQuantityIfCustomerWant(item);
+            }
+        }
+    }
+
+    private void addQuantityIfPossible(PurchaseItem item) {
+        if (item.canBeAddFreeMore()) {
+            Boolean answerAboutAddFree = AddFreeInputHandler.promptAskingAddFree(item.getProduct().getName());
+            if (answerAboutAddFree) {
+                item.addQuantity();
+            }
+        }
+    }
+
+    private void decreaseQuantityIfCustomerWant(PurchaseItem item) {
+        if (item.getProduct().maxPromotionQuantity() < item.getQuantity()) {
+            if (!PayRegularPriceInputHandler.promptAskingPayRegularPrice(item.getProduct().getName(), item.getQuantity() - item.getProduct().maxPromotionQuantity())) {
+                item.decreaseQuantity(item.getQuantity() - item.getProduct().maxPromotionQuantity());
+            }
+        }
+    }
+
+    private Receipt issueReceipt(List<PurchaseItem> purchaseItems) {
+        Receipt receipt = purchaseService.createReceipt(purchaseItems);
+
+        Boolean membershipDiscountChoice = MembershipDiscountInputHandler.promptAskingMembershipDiscount();
+        ReceiptOutputHandler.printReceipt(receipt, membershipDiscountChoice);
+
+        return receipt;
+    }
+
+    private void removeStock(Receipt receipt) {
+        purchaseService.removeStock(receipt);
+    }
 }
+

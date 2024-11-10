@@ -29,7 +29,9 @@ public class ReceiptTest {
     @Test
     void 총_할인_금액이_올바른지_테스트() {
         // given
-        Promotion promotion = new Promotion("탄산2+1", 2, 1, null, null);
+        LocalDate start = LocalDate.of(2024,01,01);
+        LocalDate end = LocalDate.of(2024,12,31);
+        Promotion promotion = new Promotion("탄산2+1", 2, 1, start, end);
         Product product = new Product("콜라", 1000, 10, 10, promotion);
         List<PurchaseItem> purchaseItems = new ArrayList<>(List.of(new PurchaseItem(product, 7)));
         Receipt receipt = new Receipt(purchaseItems);
@@ -45,11 +47,13 @@ public class ReceiptTest {
     @Test
     void 멤버십_할인_금액이_올바른지_테스트() {
         // given
-        Promotion promotion = new Promotion("탄산2+1", 2, 1, null, null);
+        LocalDate start = LocalDate.of(2024,01,01);
+        LocalDate end = LocalDate.of(2024,12,31);
+        Promotion promotion = new Promotion("탄산2+1", 2, 1, start, end);
         Product product = new Product("콜라", 1000, 10, 10, promotion);
         List<PurchaseItem> purchaseItems = new ArrayList<>(List.of(new PurchaseItem(product, 7)));
         Receipt receipt = new Receipt(purchaseItems);
-        int expected = 1500;
+        int expected = 300;
 
         // when
         int result = receipt.membershipDiscountedAmount();
@@ -61,12 +65,14 @@ public class ReceiptTest {
     @Test
     void 최종_결제할_금액이_올바른지_테스트() {
         // given
-        Promotion promotion = new Promotion("탄산2+1", 2, 1, null, null);
+        LocalDate start = LocalDate.of(2024,01,01);
+        LocalDate end = LocalDate.of(2024,12,31);
+        Promotion promotion = new Promotion("탄산2+1", 2, 1, start, end);
         Product product = new Product("콜라", 1000, 10, 10, promotion);
         List<PurchaseItem> purchaseItems = new ArrayList<>(List.of(new PurchaseItem(product, 7)));
         Receipt receipt = new Receipt(purchaseItems);
         Boolean membershipDiscountChoice = true;
-        int expected = 3500;
+        int expected = 4700;
 
         // when
         int result = receipt.finalPaymentAmount(membershipDiscountChoice);

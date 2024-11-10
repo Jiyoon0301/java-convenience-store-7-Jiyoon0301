@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Product {
     private final String name;
     private final int price;
-    private Integer regularStock;
-    private Integer promoStock;
+    private int regularStock;
+    private int promoStock;
     private Promotion promotion;
 
     public Product(String name, int price, int regularStock, int promoStock, Promotion promotion) {

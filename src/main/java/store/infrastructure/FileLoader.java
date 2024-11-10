@@ -38,11 +38,11 @@ public class FileLoader {
             int stock = Integer.parseInt(fields[2].trim());
             String promotionName = fields[3].trim();
             Product existingProduct = findProductByName(products, name);
-            if (existingProduct !=null && promotionName.equals("null")) { // 프로모션 없는 기존 제품
+            if (existingProduct != null && promotionName.equals("null")) { // 프로모션 없는 기존 제품
                 existingProduct.addRegularStock(stock + 1);
                 continue;
             }
-            if (existingProduct !=null && !promotionName.equals("null")) { // 프로모션 있는 기존 제품
+            if (existingProduct != null && !promotionName.equals("null")) { // 프로모션 있는 기존 제품
                 existingProduct.addPromoStock(stock + 1);
                 continue;
             }
