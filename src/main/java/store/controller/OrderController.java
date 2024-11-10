@@ -6,6 +6,7 @@ import store.domain.PurchaseItem;
 import store.infrastructure.FileLoader;
 import store.service.PurchaseService;
 import store.view.AddFreeInputHandler;
+import store.view.PayRegularPriceInputHandler;
 import store.view.ProductOutputHandler;
 import store.view.ProductSelectionInputHandler;
 
@@ -36,7 +37,11 @@ public class OrderController {
                         item.addQuantity();
                     }
 
-//                if (item.)
+                if (item.getProduct().maxPromotionQuantity() < item.getQuantity()) {
+                    if (!PayRegularPriceInputHandler.promptAskingPayRegularPrice(item.getProduct().getName(),item.getQuantity() - item.getProduct().maxPromotionQuantity())) {
+//                        item.decreaseQuantity(item.getQuantity() - item.getProduct().maxPromotionQuantity());
+                    }
+                }
                 }
             }
         }

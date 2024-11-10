@@ -42,4 +42,8 @@ public class PurchaseItem {
     public void addQuantity() {
         quantity++;
     }
+
+    public void decreaseQuantity(int i) {
+        quantity -= i;
+    }
 }

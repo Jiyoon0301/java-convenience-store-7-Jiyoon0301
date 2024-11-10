@@ -80,4 +80,17 @@ public class PurchaseItemTest {
         // given
         assertThat(purchaseItem.getQuantity()).isEqualTo(expected);
     }
+
+    @Test
+    void 구매할_상품의_수량_감소_테스트() {
+        // given
+        PurchaseItem purchaseItem = new PurchaseItem(null, 18);
+        int expected = 16;
+
+        // when
+        purchaseItem.decreaseQuantity(2);
+
+        // given
+        assertThat(purchaseItem.getQuantity()).isEqualTo(expected);
+    }
 }
