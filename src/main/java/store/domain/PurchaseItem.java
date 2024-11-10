@@ -17,13 +17,9 @@ public class PurchaseItem {
         return quantity;
     }
 
-    public int promotionApplicableQuantity() {
-        return product.getPromoQuantity() / (product.getPromotion().getBuy() + product.getPromotion().getGet());
-    }
-
     public Boolean canBeAddFreeMore() {
         int bundle = product.getPromotion().getBuy() + product.getPromotion().getGet();
-        if (quantity % bundle == bundle - 1) {
+        if (quantity < product.getPromoQuantity() && quantity % bundle == bundle - 1) {
             return true;
         }
         return false;
