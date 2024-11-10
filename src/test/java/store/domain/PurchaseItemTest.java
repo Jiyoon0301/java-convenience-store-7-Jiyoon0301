@@ -67,4 +67,19 @@ public class PurchaseItemTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
+
+    @Test
+    void 구매할_개별_상품의_프로모션_적용으로_할인된_금액() {
+        // given
+        Promotion promotion = new Promotion("탄산2+1", 2, 1, null, null);
+        Product product = new Product("콜라", 1000, 10, 10, promotion);
+        PurchaseItem purchaseItem = new PurchaseItem(product, 7);
+        int expected = 2000;
+
+        // when
+        int result = purchaseItem.discountedAmount();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
 }
