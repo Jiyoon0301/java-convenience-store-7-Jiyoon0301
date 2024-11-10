@@ -29,5 +29,13 @@ public class PurchaseItem {
         return false;
     }
 
-
+    public int numberOfFree() {
+        if (product.getPromotion() == null) {
+            return 0;
+        }
+        if (quantity <= product.getPromoQuantity()) {
+            return quantity / (product.getPromotion().getBuy() + 1);
+        }
+        return product.getPromoQuantity() / (product.getPromotion().getBuy() + 1);
+    }
 }
