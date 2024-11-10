@@ -19,4 +19,11 @@ public class PurchaseService {
     public Receipt createReceipt(List<PurchaseItem> purchaseItems) {
         return new Receipt(purchaseItems);
     }
+
+//    public void removeStock(Receipt receipt) {
+//        for (PurchaseItem item : receipt.getPurchaseItems()) {
+//            int numberToRemove = item.getQuantity();
+//            if (!item.getProduct().getPromoStock() == -1)
+//        }
+//    }
 }

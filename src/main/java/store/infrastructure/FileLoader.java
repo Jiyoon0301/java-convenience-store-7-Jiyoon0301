@@ -39,22 +39,22 @@ public class FileLoader {
             String promotionName = fields[3].trim();
             Product existingProduct = findProductByName(products, name);
             if (existingProduct !=null && promotionName.equals("null")) { // 프로모션 없는 기존 제품
-                existingProduct.addRegularStock(stock);
+                existingProduct.addRegularStock(stock + 1);
                 continue;
             }
             if (existingProduct !=null && !promotionName.equals("null")) { // 프로모션 있는 기존 제품
-                existingProduct.addPromoStock(stock);
+                existingProduct.addPromoStock(stock + 1);
                 continue;
             }
 
             Promotion promotion = findPromotionByName(promotions, promotionName);
 
             if (promotionName.equals("null")) {
-                Product product = new Product(name, price, stock, 0, promotion);
+                Product product = new Product(name, price, stock, -1, promotion);
                 products.add(product);
             }
             if (!promotionName.equals("null")) {
-                Product product = new Product(name, price, 0, stock, promotion);
+                Product product = new Product(name, price, -1, stock, promotion);
                 products.add(product);
             }
         }

@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PurchaseServiceTest {
 
     private final PurchaseService purchaseService = new PurchaseService();
+
     @Test
     void 구매상품_객체_리스트를_올바르게_생성하는지_테스트() {
         // given
@@ -52,6 +53,29 @@ public class PurchaseServiceTest {
         Receipt receipt = purchaseService.createReceipt(purchaseItems);
         String result1 = receipt.getPurchaseItems().get(0).getProduct().getName();
         String result2 = receipt.getPurchaseItems().get(1).getProduct().getName();
+
+        // then
+        assertThat(result1).isEqualTo(expected1);
+        assertThat(result2).isEqualTo(expected2);
+    }
+
+    @Test
+    void 구매_수량만큼_재고_차감() {
+        // given
+        Promotion promotion = null;
+        Product product1 = new Product("콜라", 10, -1, 10, promotion);
+        Product product2 = new Product("사이다", 10, 10, -1, promotion);
+        PurchaseItem purchaseItem1 = new PurchaseItem(product1, 10);
+        PurchaseItem purchaseItem2 = new PurchaseItem(product2, 10);
+        List<PurchaseItem> purchaseItems = new ArrayList<>(List.of(purchaseItem1, purchaseItem2));
+        Receipt receipt = new Receipt(purchaseItems);
+        int expected1 = 0;
+        int expected2 = 0;
+
+        // when
+        purchaseService.removeStock(receipt);
+        int result1 = receipt.getPurchaseItems().get(0).getProduct().getPromoStock();
+        int result2 = receipt.getPurchaseItems().get(1).getProduct().getRegularStock();
 
         // then
         assertThat(result1).isEqualTo(expected1);

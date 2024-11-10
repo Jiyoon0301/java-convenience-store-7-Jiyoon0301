@@ -81,7 +81,9 @@ public class ProductSelectionInputHandler {
 
     private static void checkStock(Map<Product, Integer> input) {
         for (Map.Entry<Product, Integer> entry : input.entrySet()) {
-            if (entry.getKey().getRegularQuantity() + entry.getKey().getPromoQuantity() < entry.getValue()) {
+            int promoStock = Math.max(entry.getKey().getPromoStock(), 0);
+            int regularStock = Math.max(entry.getKey().getRegularStock(), 0);
+            if (promoStock + regularStock < entry.getValue()) {
                 throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
             }
         }

@@ -39,8 +39,8 @@ public class FileLoaderTest {
         // then
         assertThat(result.getName()).isEqualTo(name);
         assertThat(result.getPrice()).isEqualTo(price);
-        assertThat(result.getRegularQuantity()).isEqualTo(regularStock);
-        assertThat(result.getPromoQuantity()).isEqualTo(promoStock);
+        assertThat(result.getRegularStock()).isEqualTo(regularStock);
+        assertThat(result.getPromoStock()).isEqualTo(promoStock);
         assertThat(result.getPromotion()).isEqualTo(promotion);
     }
 

@@ -12,30 +12,19 @@ public class ProductOutputHandler {
         System.out.println();
 
         for (Product product : products) {
-            int stock = stockToPrint(product);
-            String promotionName = promotionNameToPrint(product);
-            System.out.printf(dependingOnStock(product.getName(), product.getPrice(), stock, promotionName));
+            if (product.getPromoStock() != -1) {
+                printDependingOnStock(product.getName(), product.getPrice(), product.getPromoStock(), product.getPromotion().getName());
+            }
+            if (product.getRegularStock() != -1) {
+                printDependingOnStock(product.getName(), product.getPrice(), product.getRegularStock(), "");
+            }
         }
     }
 
-    private static int stockToPrint(Product product) {
-        if (product.getPromotion() == null){
-            return product.getRegularQuantity();
-        }
-        return product.getPromoQuantity();
-    }
-
-    private static String dependingOnStock(String name, int price, int stock, String promotionName) {
+    private static void printDependingOnStock(String name, int price, int stock, String promotionName) {
         if (stock == 0) {
-            return String.format("- %s %d원 재고 없음 %s\n", name, price, promotionName);
+            System.out.printf("- %s %d원 재고 없음 %s\n", name, price, promotionName);
         }
-        return String.format("- %s %d원 %d개 %s\n", name, price, stock, promotionName);
-    }
-
-    private static String promotionNameToPrint(Product product) {
-        if (product.getPromotion() == null){
-            return "";
-        }
-        return product.getPromotion().getName();
+        System.out.printf("- %s %d원 %d개 %s\n", name, price, stock, promotionName);
     }
 }

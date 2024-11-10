@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Product {
     private final String name;
     private final int price;
-    private int regularStock;
-    private int promoStock;
+    private Integer regularStock;
+    private Integer promoStock;
     private Promotion promotion;
 
-    public Product(String name, int price, int regularQuantity, int promoQuantity, Promotion promotion) {
+    public Product(String name, int price, int regularStock, int promoStock, Promotion promotion) {
         this.name = name;
         this.price = price;
-        this.regularStock = regularQuantity;
-        this.promoStock = promoQuantity;
+        this.regularStock = regularStock;
+        this.promoStock = promoStock;
         this.promotion = promotion;
     }
 
@@ -33,16 +33,24 @@ public class Product {
         return price;
     }
 
-    public int getRegularQuantity() {
+    public int getRegularStock() {
         return regularStock;
     }
 
-    public int getPromoQuantity() {
+    public int getPromoStock() {
         return promoStock;
     }
 
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    public void removeRegularStock(int num) {
+        this.regularStock -= num;
+    }
+
+    public void removePromoStock(int num) {
+        this.promoStock -= num;
     }
 
     public int maxPromotionQuantity() {

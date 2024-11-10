@@ -19,7 +19,7 @@ public class PurchaseItem {
 
     public Boolean canBeAddFreeMore() {
         int bundle = product.getPromotion().getBuy() + product.getPromotion().getGet();
-        if (quantity < product.getPromoQuantity() && quantity % bundle == bundle - 1) {
+        if (quantity < product.getPromoStock() && quantity % bundle == bundle - 1) {
             return true;
         }
         return false;
@@ -29,10 +29,10 @@ public class PurchaseItem {
         if (product.getPromotion() == null || !product.getPromotion().canBeApplied()) {
             return 0;
         }
-        if (quantity <= product.getPromoQuantity()) {
+        if (quantity <= product.getPromoStock()) {
             return quantity / (product.getPromotion().getBuy() + 1);
         }
-        return product.getPromoQuantity() / (product.getPromotion().getBuy() + 1);
+        return product.getPromoStock() / (product.getPromotion().getBuy() + 1);
     }
 
     public int discountedAmount() {
