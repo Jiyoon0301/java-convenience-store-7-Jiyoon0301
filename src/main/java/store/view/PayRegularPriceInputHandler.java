@@ -2,11 +2,9 @@ package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
-public class MembershipDiscountInputHandler {
-
-
-    public static Boolean promptAskingMembershipDiscount() {
-        System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
+public class PayRegularPriceInputHandler {
+    public static Boolean promptAskingPayRegularPrice(String productName, int productQuantity) {
+        System.out.printf("현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)\n", productName, productQuantity);
         String input = Console.readLine();
         return validateInput(input);
     }
