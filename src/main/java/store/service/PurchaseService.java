@@ -24,8 +24,8 @@ public class PurchaseService {
         for (PurchaseItem item : receipt.getPurchaseItems()) {
             int numberToRemove = item.getQuantity();
             if (item.getProduct().getPromoStock() != -1 && item.getProduct().getPromoStock() >= numberToRemove) {
-                numberToRemove = 0;
                 item.getProduct().removePromoStock(numberToRemove);
+                numberToRemove = 0;
             }
             if (item.getProduct().getPromoStock() != -1 && item.getProduct().getPromoStock() < numberToRemove) {
                 numberToRemove -= item.getProduct().getPromoStock();
