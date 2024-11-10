@@ -20,10 +20,18 @@ public class PurchaseService {
         return new Receipt(purchaseItems);
     }
 
-//    public void removeStock(Receipt receipt) {
-//        for (PurchaseItem item : receipt.getPurchaseItems()) {
-//            int numberToRemove = item.getQuantity();
-//            if (!item.getProduct().getPromoStock() == -1)
-//        }
-//    }
+    public void removeStock(Receipt receipt) {
+        for (PurchaseItem item : receipt.getPurchaseItems()) {
+            int numberToRemove = item.getQuantity();
+            if (item.getProduct().getPromoStock() != -1 && item.getProduct().getPromoStock() >= numberToRemove) {
+                numberToRemove = 0;
+                item.getProduct().removePromoStock(numberToRemove);
+            }
+            if (item.getProduct().getPromoStock() != -1 && item.getProduct().getPromoStock() < numberToRemove) {
+                numberToRemove -= item.getProduct().getPromoStock();
+                item.getProduct().removePromoStock(item.getProduct().getPromoStock());
+            }
+            item.getProduct().removeRegularStock(numberToRemove);
+        }
+    }
 }

@@ -15,16 +15,17 @@ public class ProductOutputHandler {
             if (product.getPromoStock() != -1) {
                 printDependingOnStock(product.getName(), product.getPrice(), product.getPromoStock(), product.getPromotion().getName());
             }
-            if (product.getRegularStock() != -1) {
-                printDependingOnStock(product.getName(), product.getPrice(), product.getRegularStock(), "");
-            }
+            printDependingOnStock(product.getName(), product.getPrice(), Math.max(0,product.getRegularStock()), "");
+
         }
+        System.out.println();
     }
 
     private static void printDependingOnStock(String name, int price, int stock, String promotionName) {
         if (stock == 0) {
-            System.out.printf("- %s %d원 재고 없음 %s\n", name, price, promotionName);
+            System.out.printf("- %s %,d원 재고 없음 %s\n", name, price, promotionName);
+            return;
         }
-        System.out.printf("- %s %d원 %d개 %s\n", name, price, stock, promotionName);
+        System.out.printf("- %s %,d원 %d개 %s\n", name, price, stock, promotionName);
     }
 }
