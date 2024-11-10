@@ -21,4 +21,12 @@ public class Receipt {
         }
         return sum;
     }
+
+    public int totalDiscountedAmount() {
+        int sum = 0;
+        for (PurchaseItem item : purchaseItems) {
+            sum += item.discountedAmount();
+        }
+        return sum;
+    }
 }
