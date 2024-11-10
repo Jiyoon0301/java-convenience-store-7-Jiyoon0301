@@ -33,8 +33,10 @@ public class OrderController {
                 if (item.canBeAddFreeMore()) {
                     Boolean answerAboutAddFree = AddFreeInputHandler.promptAskingAddFree(item.getProduct().getName());
                     if (answerAboutAddFree) {
-//                        item.addQuantity();
+                        item.addQuantity();
                     }
+
+//                if (item.)
                 }
             }
         }
