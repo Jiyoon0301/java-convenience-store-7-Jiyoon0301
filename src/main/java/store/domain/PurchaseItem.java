@@ -1,7 +1,7 @@
 package store.domain;
 
 public class PurchaseItem {
-    private Product product;
+    private final Product product;
     private int quantity;
 
     public PurchaseItem(Product product, int quantity) {
@@ -37,5 +37,9 @@ public class PurchaseItem {
 
     public int discountedAmount() {
         return numberOfFree() * product.getPrice();
+    }
+
+    public void addQuantity() {
+        quantity++;
     }
 }
