@@ -29,4 +29,9 @@ public class Receipt {
         }
         return sum;
     }
+
+    public int membershipDiscountedAmount() {
+        int amount = totalPurchaseAmount() - totalPromotionDiscountedAmount();
+        return Math.min(amount / 10 * 3, 8000);
+    }
 }
