@@ -30,7 +30,7 @@ public class PurchaseItem {
     }
 
     public int numberOfFree() {
-        if (product.getPromotion() == null) {
+        if (product.getPromotion() == null || !product.getPromotion().canBeApplied()) {
             return 0;
         }
         if (quantity <= product.getPromoQuantity()) {
