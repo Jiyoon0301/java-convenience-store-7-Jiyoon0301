@@ -57,4 +57,21 @@ public class ReceiptTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
+
+    @Test
+    void 최종_결제할_금액이_올바른지_테스트() {
+        // given
+        Promotion promotion = new Promotion("탄산2+1", 2, 1, null, null);
+        Product product = new Product("콜라", 1000, 10, 10, promotion);
+        List<PurchaseItem> purchaseItems = new ArrayList<>(List.of(new PurchaseItem(product, 7)));
+        Receipt receipt = new Receipt(purchaseItems);
+        Boolean membershipDiscountChoice = true;
+        int expected = 3500;
+
+        // when
+        int result = receipt.finalPaymentAmount(membershipDiscountChoice);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
 }
