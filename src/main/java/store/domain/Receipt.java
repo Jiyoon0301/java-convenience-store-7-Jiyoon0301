@@ -22,7 +22,7 @@ public class Receipt {
         return sum;
     }
 
-    public int totalDiscountedAmount() {
+    public int totalPromotionDiscountedAmount() {
         int sum = 0;
         for (PurchaseItem item : purchaseItems) {
             sum += item.discountedAmount();
