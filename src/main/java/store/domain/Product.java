@@ -44,4 +44,8 @@ public class Product {
     public Promotion getPromotion() {
         return promotion;
     }
+
+    public int maxPromotionQuantity() {
+        return promoStock - promoStock % (promotion.getBuy() + 1);
+    }
 }
