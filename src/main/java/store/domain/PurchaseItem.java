@@ -38,4 +38,8 @@ public class PurchaseItem {
         }
         return product.getPromoQuantity() / (product.getPromotion().getBuy() + 1);
     }
+
+    public int discountedAmount() {
+        return numberOfFree() * product.getPrice();
+    }
 }

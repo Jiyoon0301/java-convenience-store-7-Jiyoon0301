@@ -73,8 +73,8 @@ public class PurchaseItemTest {
         // given
         Promotion promotion = new Promotion("탄산2+1", 2, 1, null, null);
         Product product = new Product("콜라", 1000, 10, 10, promotion);
-        PurchaseItem purchaseItem = new PurchaseItem(product, 7);
-        int expected = 2000;
+        PurchaseItem purchaseItem = new PurchaseItem(product, 18);
+        int expected = 3000;
 
         // when
         int result = purchaseItem.discountedAmount();
