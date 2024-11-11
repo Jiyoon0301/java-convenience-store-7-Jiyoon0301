@@ -52,16 +52,7 @@ public class FileLoader {
                 continue;
             }
 
-            Promotion promotion = findPromotionByName(promotions, promotionName);
-
-            if (promotionName.equals("null")) {
-                Product product = new Product(name, price, stock, -1, promotion);
-                products.add(product);
-            }
-            if (!promotionName.equals("null")) {
-                Product product = new Product(name, price, -1, stock, promotion);
-                products.add(product);
-            }
+            products.add(createNewProduct(promotions, promotionName, name, price, stock));
         }
         return products;
     }
@@ -82,6 +73,17 @@ public class FileLoader {
             }
         }
         return null;
+    }
+
+    private Product createNewProduct(List<Promotion> promotions, String promotionName, String productName, int price, int stock) {
+        Promotion promotion = findPromotionByName(promotions, promotionName);
+
+        if (promotionName.equals("null")) {
+            Product product = new Product(productName, price, stock, -1, promotion);
+            return product;
+        }
+        Product product = new Product(productName, price, -1, stock, promotion);
+        return product;
     }
 
     public List<Promotion> loadPromotions() {
