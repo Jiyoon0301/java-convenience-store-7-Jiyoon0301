@@ -91,17 +91,21 @@ public class FileLoader {
         String[] lines = data.split("\n");
 
         for (int i = 1; i < lines.length; i++) {
-            String[] fields = lines[i].split(",");
-
-            String name = fields[0].trim();
-            int buy = Integer.parseInt(fields[1].trim());
-            int get = Integer.parseInt(fields[2].trim());
-            LocalDate startDate = LocalDate.parse(fields[3].trim());
-            LocalDate endDate = LocalDate.parse(fields[4].trim());
-
-            Promotion promotion = new Promotion(name, buy, get, startDate, endDate);
+            Promotion promotion = splitPromotionData(lines[i]);
             promotions.add(promotion);
         }
         return promotions;
+    }
+
+    private Promotion splitPromotionData(String line) {
+        String[] fields = line.split(",");
+
+        String name = fields[0].trim();
+        int buy = Integer.parseInt(fields[1].trim());
+        int get = Integer.parseInt(fields[2].trim());
+        LocalDate startDate = LocalDate.parse(fields[3].trim());
+        LocalDate endDate = LocalDate.parse(fields[4].trim());
+
+        return new Promotion(name, buy, get, startDate, endDate);
     }
 }
