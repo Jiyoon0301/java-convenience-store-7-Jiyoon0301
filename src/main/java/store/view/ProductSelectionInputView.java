@@ -5,22 +5,23 @@ import store.domain.ErrorMessage;
 import store.domain.Product;
 
 import java.util.*;
-import java.util.logging.ErrorManager;
 
-public class ProductSelectionInputHandler {
+public class ProductSelectionInputView {
 
     public static Map<Product, Integer> promptProductSelection(List<Product> products) {
         while (true) {
-            System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]");
-            String input = Console.readLine();
+            String input = getUserForProductSelection();
             try {
-                Map<Product, Integer> productAndQuantityParis = validateProductSelection(input, products);
-                return productAndQuantityParis;
+                return validateProductSelection(input, products);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-
         }
+    }
+
+    private static String getUserForProductSelection() {
+        System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]");
+        return Console.readLine();
     }
 
     public static Map<Product, Integer> validateProductSelection(String input, List<Product> products) {

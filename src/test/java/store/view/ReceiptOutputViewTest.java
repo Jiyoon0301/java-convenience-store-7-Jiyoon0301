@@ -9,7 +9,7 @@ import store.domain.Receipt;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ReceiptOutputHandlerTest {
+public class ReceiptOutputViewTest {
     @Test
     void 영수증_출력_테스트() {
         LocalDate start = LocalDate.of(2024, 01, 01);
@@ -20,6 +20,6 @@ public class ReceiptOutputHandlerTest {
         PurchaseItem purchaseItem1 = new PurchaseItem(product1, 3);
         PurchaseItem purchaseItem2 = new PurchaseItem(product2, 5);
         Receipt receipt = new Receipt(List.of(purchaseItem1, purchaseItem2));
-        ReceiptOutputHandler.printReceipt(receipt, true);
+        ReceiptOutputView.printReceipt(receipt, true);
     }
 }

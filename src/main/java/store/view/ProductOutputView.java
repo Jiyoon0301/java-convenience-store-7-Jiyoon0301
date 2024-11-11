@@ -4,7 +4,7 @@ import store.domain.Product;
 
 import java.util.List;
 
-public class ProductOutputHandler {
+public class ProductOutputView {
 
     public static void printProductList(List<Product> products) {
         promptProductList();

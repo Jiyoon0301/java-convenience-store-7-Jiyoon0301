@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ProductSelectionInputHandlerTest {
+public class ProductSelectionInputViewTest {
     @ParameterizedTest
     @ValueSource(strings = {"[콜라-10],[사이다-3", "콜라-10],[사이다-3]", "[콜라10,사이다3]"})
     void 입력_받은_개별_상품들은_대괄호로_묶여있지_않으면_예외_발생(String input) {
@@ -21,7 +21,7 @@ public class ProductSelectionInputHandlerTest {
         List<Product> products = null;
 
         // when & then
-        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
+        assertThatThrownBy(() -> ProductSelectionInputView.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_FORMAT.getMessage());
     }
@@ -33,7 +33,7 @@ public class ProductSelectionInputHandlerTest {
         List<Product> products = null;
 
         // when & then
-        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
+        assertThatThrownBy(() -> ProductSelectionInputView.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_FORMAT.getMessage());
     }
@@ -46,7 +46,7 @@ public class ProductSelectionInputHandlerTest {
         List<Product> products = new ArrayList<>(List.of(new Product("콜라", 1000, 10, 10, promotion)));
 
         // when & then
-        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
+        assertThatThrownBy(() -> ProductSelectionInputView.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.NOT_EXIST.getMessage());
     }
@@ -59,7 +59,7 @@ public class ProductSelectionInputHandlerTest {
         List<Product> products = new ArrayList<>(List.of(new Product("콜라", 1000, 10, 10, promotion)));
 
         // when & then
-        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
+        assertThatThrownBy(() -> ProductSelectionInputView.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_INPUT.getMessage());
     }
@@ -72,7 +72,7 @@ public class ProductSelectionInputHandlerTest {
         List<Product> products = new ArrayList<>(List.of(new Product("콜라", 1000, 10, 10, promotion)));
 
         // when & then
-        assertThatThrownBy(() -> ProductSelectionInputHandler.validateProductSelection(input, products))
+        assertThatThrownBy(() -> ProductSelectionInputView.validateProductSelection(input, products))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.OUT_OF_STOCK.getMessage());
     }

@@ -3,14 +3,14 @@ package store.view;
 import camp.nextstep.edu.missionutils.Console;
 import store.domain.ErrorMessage;
 
-public class PayRegularPriceInputHandler {
-    public static Boolean promptAskingPayRegularPrice(String productName, int productQuantity) {
+public class AdditionalPurchaseInputView {
+    public static Boolean promptAdditionalPurchase() {
         while (true) {
-            System.out.printf("현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)\n", productName, productQuantity);
+            System.out.println("감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)");
             String input = Console.readLine();
             try {
                 return validateInput(input);
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }

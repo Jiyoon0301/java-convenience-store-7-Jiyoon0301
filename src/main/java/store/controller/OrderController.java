@@ -40,7 +40,7 @@ public class OrderController {
 
         removeStock(receipt);
 
-        return AdditionalPurchaseInputHandler.promptAdditionalPurchase();
+        return AdditionalPurchaseInputView.promptAdditionalPurchase();
     }
 
     private List<Product> createProduct() {
@@ -49,8 +49,8 @@ public class OrderController {
     }
 
     private List<PurchaseItem> selectProduct(List<Product> products) {
-        ProductOutputHandler.printProductList(products);
-        Map<Product, Integer> productAndQuantityPairs = ProductSelectionInputHandler.promptProductSelection(products);
+        ProductOutputView.printProductList(products);
+        Map<Product, Integer> productAndQuantityPairs = ProductSelectionInputView.promptProductSelection(products);
         return purchaseService.createPurchaseItems(productAndQuantityPairs);
     }
 
@@ -65,7 +65,7 @@ public class OrderController {
 
     private void addQuantityIfPossible(PurchaseItem item) {
         if (item.canBeAddFreeMore()) {
-            Boolean answerAboutAddFree = AddFreeInputHandler.promptAskingAddFree(item.getProduct().getName());
+            Boolean answerAboutAddFree = AddFreeInputView.promptAskingAddFree(item.getProduct().getName());
             if (answerAboutAddFree) {
                 item.addQuantity();
             }
@@ -74,7 +74,7 @@ public class OrderController {
 
     private void decreaseQuantityIfCustomerWant(PurchaseItem item) {
         if (item.getProduct().maxPromotionQuantity() < item.getQuantity()) {
-            if (!PayRegularPriceInputHandler.promptAskingPayRegularPrice(item.getProduct().getName(), item.getQuantity() - item.getProduct().maxPromotionQuantity())) {
+            if (!PayRegularPriceInputView.promptAskingPayRegularPrice(item.getProduct().getName(), item.getQuantity() - item.getProduct().maxPromotionQuantity())) {
                 item.decreaseQuantity(item.getQuantity() - item.getProduct().maxPromotionQuantity());
             }
         }
@@ -83,8 +83,8 @@ public class OrderController {
     private Receipt issueReceipt(List<PurchaseItem> purchaseItems) {
         Receipt receipt = purchaseService.createReceipt(purchaseItems);
 
-        Boolean membershipDiscountChoice = MembershipDiscountInputHandler.promptAskingMembershipDiscount();
-        ReceiptOutputHandler.printReceipt(receipt, membershipDiscountChoice);
+        Boolean membershipDiscountChoice = MembershipDiscountInputView.promptAskingMembershipDiscount();
+        ReceiptOutputView.printReceipt(receipt, membershipDiscountChoice);
 
         return receipt;
     }

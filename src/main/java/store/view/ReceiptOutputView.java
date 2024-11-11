@@ -3,7 +3,7 @@ package store.view;
 import store.domain.PurchaseItem;
 import store.domain.Receipt;
 
-public class ReceiptOutputHandler {
+public class ReceiptOutputView {
     public static void printReceipt(Receipt receipt, Boolean membership) {
         System.out.println("==============W 편의점================");
         printNameQuantityAmount(receipt);
