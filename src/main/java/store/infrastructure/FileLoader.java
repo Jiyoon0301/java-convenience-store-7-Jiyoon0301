@@ -26,10 +26,15 @@ public class FileLoader {
 
     public List<Product> loadProducts(List<Promotion> promotions) {
         String data = loadFile("src/main/resources/products.md");
-        List<Product> products = new ArrayList<>();
 
         String[] lines = data.split("\n");
 
+        List<Product> products = processProductLine(promotions, new ArrayList<>(), lines);
+
+        return products;
+    }
+
+    private List<Product> processProductLine(List<Promotion> promotions, List<Product> products, String[] lines) {
         for (int i = 1; i < lines.length; i++) {
             String[] fields = lines[i].split(",");
 
